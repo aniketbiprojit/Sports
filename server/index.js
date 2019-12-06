@@ -1,5 +1,5 @@
 const express = require('express')
-Player = require('./schemas/players')
+Player = require('./schemas/playerSchema')
 const app = express()
 
 require('./server')

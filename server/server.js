@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-mongoose.connect('mongodb://localhost:27017/xseed', {
+mongoose.connect('mongodb://localhost:27017/sports', {
 	useUnifiedTopology: true,
 	useNewUrlParser: true
 })
