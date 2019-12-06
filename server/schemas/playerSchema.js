@@ -38,13 +38,45 @@ const createPlayer = async (playerName, house, course, year, about) => {
 			About: about
 		})
 		const result = await player.save()
-		console.log(result)
 	} catch (err) {
 		console.log(err)
-		throw new Error('Create Player Failed')
+		throw new Error(`Create Player Failed ${playerName}`)
+	}
+}
+
+const deletePlayer = async playerId => {
+	try {
+		if (playerId) {
+			const result = await Player.findByIdAndDelete(playerId)
+			console.log(result)
+		} else throw new Error('Failed to define player id')
+	} catch (err) {
+		console.log(err)
+		throw new Error(`Failed to delete player of id ${playerId}`)
+	}
+}
+
+const getPlayer = async playerId => {
+	try {
+		const result = await Player.findById("5de9abff9629b41bd48202a3")
+		return result
+	} catch (err) {
+		console.log(err)
+	}
+}
+
+const getPlayers = async () => {
+	try {
+		const result = await Player.find()
+		return result
+	} catch (err) {
+		console.log(err)
 	}
 }
 
 module.exports.PlayerModel = Player
 module.exports.PlayerSchema = PlayerSchema
 module.exports.createPlayer = createPlayer
+module.exports.deletePlayer = deletePlayer
+module.exports.getPlayer = getPlayer
+module.exports.getPlayers = getPlayers

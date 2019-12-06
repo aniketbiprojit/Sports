@@ -9,6 +9,6 @@ app.use(express.urlencoded({ extended: true }))
 
 const port = process.env.PORT || 8080
 
-app.get('/')
+app.use('/player',require('./routes/playerRoutes').playerRoutes)
 
 app.listen(port, () => console.log(`Listening on port ${port}`))

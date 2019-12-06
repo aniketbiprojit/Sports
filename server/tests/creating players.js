@@ -10,4 +10,28 @@ const read = async file => {
 
 console.log(csvFilePath)
 
-const players = read(csvFilePath)
+async function createPlayer(player, i) {
+	try {
+		const response = await axios.post(
+			'http://localhost:8080/player/add',
+			player
+		)
+	} catch (err) {
+		console.log(i)
+		throw new Error("Couldn't create new player.")
+	}
+}
+
+const execute = async () => {
+	i = 0
+	try {
+		const players = await read(csvFilePath)
+		await players.forEach(player => {
+			i += 1
+			createPlayer(player, i)
+		})
+	} catch (err) {
+		console.log(err)
+	}
+}
+execute()
