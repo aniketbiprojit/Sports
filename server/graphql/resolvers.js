@@ -29,10 +29,19 @@ const resolvers = {
 		async players() {
 			return await PlayerModel.find().populate('House')
 		},
-		async player(root, args) {
-			return await PlayerModel.find({ PlayerName: args.name }).populate(
-				'House'
-			)
+		async player(_, args) {
+			if (args.input.House) {
+				args.input.House = await getHouseId(args.input.House)
+			}
+			return await PlayerModel.find(args.input).populate('House')
+		},
+		async games() {
+			const GameModel = require('../schemas/gameSchema').GameModel
+			return await GameModel.find()
+		},
+		async game(_, args) {
+			const GameModel = require('../schemas/gameSchema').GameModel
+			return await GameModel.find(args.input)
 		}
 	},
 	Mutation: {

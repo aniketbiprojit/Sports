@@ -9,8 +9,8 @@ let HouseModel = mongoose.model(
 
 let PlayerModel = mongoose.model(
 	'player',
-	require('../schemas/playerSchema').PlayerSchema)
-
+	require('../schemas/playerSchema').PlayerSchema
+)
 
 const typeDefs = gql`
 	type House {
@@ -41,10 +41,25 @@ const typeDefs = gql`
 		About: String
 	}
 
+	input GameInput {
+		GameName: String
+		GameType: String
+		GameCaption: String
+	}
+
+	type Game {
+		_id: ID!
+		GameName: String
+		GameType: String
+		GameCaption: String
+	}
+
 	type Query {
 		houses: [House]
 		players: [Player]
-		player(name: String): [Player]
+		player(input:PlayerInput): [Player]
+		games: [Game]
+		game(input: GameInput): [Game]
 	}
 
 	type Mutation {
@@ -54,4 +69,4 @@ const typeDefs = gql`
 	}
 `
 
-module.exports=typeDefs
+module.exports = typeDefs
