@@ -1,14 +1,8 @@
 const mongoose = require('mongoose')
 
-let HouseModel = mongoose.model(
-	'house',
-	require('../schemas/houseSchema').HouseSchema
-)
-
-let PlayerModel = mongoose.model(
-	'player',
-	require('../schemas/playerSchema').PlayerSchema
-)
+let HouseModel = require('../schemas/houseSchema').HouseModel
+let GameModel = require('../schemas/gameSchema').GameModel
+let PlayerModel = require('../schemas/playerSchema').PlayerModel
 
 const getHouseId = async houseName => {
 	try {
@@ -21,6 +15,12 @@ const getHouseId = async houseName => {
 	}
 }
 
+const getHouseIdSafe = async houseName=>{
+	const house = HouseModel
+	const result = await house.findOne({ HouseName: houseName })
+	return result	
+}
+
 const resolvers = {
 	Query: {
 		async houses() {
@@ -31,16 +31,14 @@ const resolvers = {
 		},
 		async player(_, args) {
 			if (args.input.House) {
-				args.input.House = await getHouseId(args.input.House)
+				args.input.House = await getHouseIdSafe(args.input.House)
 			}
 			return await PlayerModel.find(args.input).populate('House')
 		},
 		async games() {
-			const GameModel = require('../schemas/gameSchema').GameModel
 			return await GameModel.find()
 		},
 		async game(_, args) {
-			const GameModel = require('../schemas/gameSchema').GameModel
 			return await GameModel.find(args.input)
 		}
 	},
