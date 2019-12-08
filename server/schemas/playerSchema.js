@@ -58,7 +58,7 @@ const deletePlayer = async playerId => {
 
 const getPlayer = async playerId => {
 	try {
-		const result = await Player.findById("5de9abff9629b41bd48202a3")
+		const result = await Player.findById(playerId)
 		return result
 	} catch (err) {
 		console.log(err)
