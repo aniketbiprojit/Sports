@@ -8,20 +8,5 @@ let HouseSchema = new Schema({
 
 let House = mongoose.model('House', HouseSchema)
 
-async function createHouse(houseName, houseInfo) {
-	try {
-		houseInfo = JSON.stringify(houseInfo)
-
-		const house = new House({
-			HouseName:houseName,
-			Info:houseInfo
-		})
-		const result = await house.save()
-		console.log(result)
-	} catch (err) {
-		console.log(err)
-	}
-}
-
 module.exports.HouseModel = House
 module.exports.HouseSchema = HouseSchema

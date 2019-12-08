@@ -1,14 +1,25 @@
 const express = require('express')
-Player = require('./schemas/playerSchema')
-const app = express()
+const server = require('./server')
 
-require('./server')
+const schema = require('./graphql/schema')
+
+const port = process.env.PORT || 8080
+const app = express()
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
-const port = process.env.PORT || 8080
+async function execute() {
+	try {
+		const connection = await server()
+		connection === require('mongoose')
+	} catch (err) {
+		console.log(err)
+	}
+}
 
-app.use('/player',require('./routes/playerRoutes').playerRoutes)
+execute()
+
+app.use('/', schema)
 
 app.listen(port, () => console.log(`Listening on port ${port}`))
