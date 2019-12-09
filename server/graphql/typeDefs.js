@@ -1,9 +1,9 @@
 const gql = require('graphql-tag')
 
-const house = require('./typeDefs/house')
-const player = require('./typeDefs/player')
-const game = require('./typeDefs/game')
-const team = require('./typeDefs/team')
+const house = require('./schemaComponents/house')
+const player = require('./schemaComponents/player')
+const game = require('./schemaComponents/game')
+const team = require('./schemaComponents/team')
 
 let typeDefs = gql`
 	type Query {
@@ -14,5 +14,5 @@ let typeDefs = gql`
 		_empty:String	
 	}
 `
-typeDefs = [typeDefs, house, player, game, team]
+typeDefs = [typeDefs, house.types, player.types, game.types, team.types]
 module.exports = typeDefs

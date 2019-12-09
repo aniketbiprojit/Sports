@@ -1,5 +1,5 @@
 const gql = require('graphql-tag')
-module.exports = gql`
+module.exports.types = gql`
 	input GameInput {
 		GameName: String
 		GameType: String
@@ -18,3 +18,15 @@ module.exports = gql`
 		game(input: GameInput): [Game]
 	}
 `
+let GameModel = require('../../schemas/gameSchema').GameModel
+
+module.exports.resolvers = {
+	Query: {
+		async games() {
+			return await GameModel.find()
+		},
+		async game(_, args) {
+			return await GameModel.find(args.input)
+		}
+	}
+}
