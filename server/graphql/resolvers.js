@@ -3,6 +3,7 @@ const mongoose = require('mongoose')
 let HouseModel = require('../schemas/houseSchema').HouseModel
 let GameModel = require('../schemas/gameSchema').GameModel
 let PlayerModel = require('../schemas/playerSchema').PlayerModel
+let TeamModel = require('../schemas/teamSchema').TeamModel
 
 const getHouseId = async houseName => {
 	try {
@@ -15,10 +16,10 @@ const getHouseId = async houseName => {
 	}
 }
 
-const getHouseIdSafe = async houseName=>{
+const getHouseIdSafe = async houseName => {
 	const house = HouseModel
 	const result = await house.findOne({ HouseName: houseName })
-	return result	
+	return result
 }
 
 const resolvers = {
@@ -40,6 +41,19 @@ const resolvers = {
 		},
 		async game(_, args) {
 			return await GameModel.find(args.input)
+		},
+		async teams() {
+			return await TeamModel.find()
+				.populate({
+					path: 'TeamMembers',
+					select: 'PlayerName House',
+					populate: { path: 'House', select: 'HouseName' }
+				})
+				.populate({
+					path: 'TeamSport',
+					select: 'GameName',
+					model: GameModel
+				})
 		}
 	},
 	Mutation: {
@@ -78,6 +92,20 @@ const resolvers = {
 				}).populate('House')
 			} catch (err) {
 				console.log(err)
+				return err
+			}
+		},
+		async addTeam(_, args) {
+			try {
+				input = args.input
+				console.log(args.input)
+				const team = new TeamModel(args.input)
+				const result = await team.save()
+				return result
+			} catch (err) {
+				if (err.code === 11000) {
+					err.message = 'Team already exists.'
+				}
 				return err
 			}
 		}

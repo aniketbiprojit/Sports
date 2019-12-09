@@ -20,6 +20,8 @@ async function execute() {
 
 execute()
 
+require('./schemas/teamSchema')
+
 app.use('/', schema)
 
 app.listen(port, () => console.log(`Listening on port ${port}`))
