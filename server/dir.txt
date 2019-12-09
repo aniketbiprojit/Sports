@@ -1,0 +1,29 @@
+.
+├── dir.txt
+├── graphql
+│   ├── resolvers.js
+│   ├── schema.js
+│   ├── schemaComponents
+│   │   ├── game.js
+│   │   ├── house.js
+│   │   ├── player.js
+│   │   └── team.js
+│   └── typeDefs.js
+├── index.js
+├── package-lock.json
+├── package.json
+├── routes
+│   └── playerRoutes.js
+├── schemas
+│   ├── gameSchema.js
+│   ├── houseSchema.js
+│   ├── playerSchema.js
+│   └── teamSchema.js
+├── server.js
+├── tests
+│   ├── creating players.js
+│   ├── graphql.js
+│   └── graphql2.js
+└── todo.txt
+
+5 directories, 21 files
