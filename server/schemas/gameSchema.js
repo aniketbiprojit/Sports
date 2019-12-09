@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 
 const GameSchema = new mongoose.Schema({
-	GameName: {type:String},
+	GameName: {type:String,unique:true},
     GameType: String, // Indoor or Outdoor
     GameCaption: String
 })
