@@ -1,84 +1,18 @@
 const gql = require('graphql-tag')
 
-// const mongoose = require('mongoose')
+const house = require('./typeDefs/house')
+const player = require('./typeDefs/player')
+const game = require('./typeDefs/game')
+const team = require('./typeDefs/team')
 
-// let HouseModel = mongoose.model(
-// 	'house',
-// 	require('../schemas/houseSchema').HouseSchema
-// )
-
-// let PlayerModel = require('../schemas/playerSchema').PlayerModel
-
-const typeDefs = gql`
-	type House {
-		_id: ID!
-		HouseName: String
-		Info: String
-	}
-
-	input HouseInput {
-		HouseName: String!
-		Info: String
-	}
-
-	input PlayerInput {
-		PlayerName: String
-		House: String
-		Course: String
-		Year: String
-		About: String
-	}
-
-	type Player {
-		_id: ID!
-		PlayerName: String
-		House: House
-		Course: String
-		Year: String
-		About: String
-	}
-
-	input GameInput {
-		GameName: String
-		GameType: String
-		GameCaption: String
-	}
-
-	type Game {
-		_id: ID!
-		GameName: String
-		GameType: String
-		GameCaption: String
-	}
-
-	input TeamInput {
-		TeamName: String!
-		TeamMembers: [String]
-		TeamSport: String
-	}
-
-	type Team {
-		_id: ID!	
-		TeamName: String
-		TeamMembers: [Player]
-		TeamSport: Game
-	}
-
+let typeDefs = gql`
 	type Query {
-		houses: [House]
-		players: [Player]
-		player(input: PlayerInput): [Player]
-		games: [Game]
-		game(input: GameInput): [Game]
-		teams: [Team]
+		_empty: String
 	}
 
 	type Mutation {
-		createPlayer(input: PlayerInput): Player
-		updatePlayer(id: ID!, input: PlayerInput): Player
-		deletePlayer(id: ID!): Player
-		addTeam(input: TeamInput): Team
+		_empty:String	
 	}
 `
-
+typeDefs = [typeDefs, house, player, game, team]
 module.exports = typeDefs
