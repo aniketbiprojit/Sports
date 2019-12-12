@@ -26,6 +26,7 @@ module.exports.types = gql`
 `
 let GameModel = require('../../schemas/gameSchema').GameModel
 
+
 const simplifyErr = async fn => {
 	try {
 		return await fn
