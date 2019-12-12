@@ -11,15 +11,13 @@ module.exports.types = gql`
 		TeamName: String
 		TeamMembers: [Player]
 		TeamSport: Game
-    }
-    
-    extend type Query{
+	}
+
+	extend type Query {
 		teams: [Team]
+	}
 
-    }
-
-    extend type Mutation {
-		
+	extend type Mutation {
 		addTeam(input: TeamInput): Team
 		addTeamPlayer(id: ID!, input: ID!): Team
 		removeTeamPlayer(id: ID!, input: ID!): Team
@@ -29,20 +27,24 @@ module.exports.types = gql`
 let TeamModel = require('../../schemas/teamSchema').TeamModel
 let GameModel = require('../../schemas/gameSchema').GameModel
 
-module.exports.resolvers={
+let teamOptions = {
+	path: 'TeamMembers',
+	select: 'PlayerName House',
+	populate: { path: 'House', select: 'HouseName' }
+}
+
+let gameOptions = {
+	path: 'TeamSport',
+	select: 'GameName',
+	model: GameModel
+}
+
+module.exports.resolvers = {
 	Query: {
 		async teams() {
 			return await TeamModel.find()
-				.populate({
-					path: 'TeamMembers',
-					select: 'PlayerName House',
-					populate: { path: 'House', select: 'HouseName' }
-				})
-				.populate({
-					path: 'TeamSport',
-					select: 'GameName',
-					model: GameModel
-				})
+				.populate(teamOptions)
+				.populate(gameOptions)
 		}
 	},
 	Mutation: {
@@ -60,7 +62,7 @@ module.exports.resolvers={
 					console.log(err)
 				}
 				return err
-			}
+			}	
 		},
 		async addTeamPlayer(_, args) {
 			try {
