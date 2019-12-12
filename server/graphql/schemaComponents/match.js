@@ -35,8 +35,8 @@ module.exports.resolvers = {
 			results.forEach(result => {
 				result.Date = new Date(result.Date)
 				if (result.Result === 'Normal') {
-					if (result.Winner === '1') result.Winner = 'Team1'
-					else result.Winner = 'Team2'
+					if (result.Winner === '1') result.Winner = result.Team1.TeamName
+					else result.Winner = result.Team2.TeamName
 				}
 			})
 			return results
