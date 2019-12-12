@@ -6,6 +6,7 @@ resolvers = require('lodash').merge(
 	require('./schemaComponents/player').resolvers,
 	require('./schemaComponents/game').resolvers,
 	require('./schemaComponents/team').resolvers,
+	require('./schemaComponents/match').resolvers,
 	)
 
 module.exports = resolvers
